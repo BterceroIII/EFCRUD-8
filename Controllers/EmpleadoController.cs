@@ -36,5 +36,30 @@ namespace EFCRUD8.Controllers
             await _appDBContext.SaveChangesAsync();
             return RedirectToAction(nameof(Lista));
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Editar(int id)
+        {
+            Empleado empleado = await _appDBContext.Empleados.FirstAsync(e => e.IdEmpleado == id);
+            return View(empleado);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Editar(Empleado empleado)
+        {
+            _appDBContext.Empleados.Update(empleado);
+            await _appDBContext.SaveChangesAsync();
+            return RedirectToAction(nameof(Lista));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Eliminar(int id)
+        {
+            Empleado empleado = await _appDBContext.Empleados.FirstAsync(e => e.IdEmpleado == id);
+
+            _appDBContext.Empleados.Remove(empleado);
+            await _appDBContext.SaveChangesAsync();
+            return RedirectToAction(nameof(Lista));
+        }
     }
 }
